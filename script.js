@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sourceText = document.getElementById('sourceText');
     const targetText = document.getElementById('targetText');
     const translateBtn = document.getElementById('translateBtn');
-    const sourceLanguage = document.getElementById('sourceLanguage');
-    const targetLanguage = document.getElementById('targetLanguage');
 
     // MD5函数
     function MD5(string) {
@@ -196,8 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const key = 'VX7SRTSZ57y8LQPxgO8B';
         const salt = Date.now().toString();
         const q = sourceText.value;
-        const from = sourceLanguage.value;
-        const to = targetLanguage.value;
+        // 固定源语言为中文，目标语言为英文
+        const from = 'zh';
+        const to = 'en';
         
         // 生成签名
         const str = appid + q + salt + key;
@@ -228,24 +227,5 @@ document.addEventListener('DOMContentLoaded', function() {
         translateBtn.disabled = true;
         translateBtn.textContent = '翻译中...';
         document.body.appendChild(script);
-    });
-
-    // 防止源语言和目标语言选择相同
-    sourceLanguage.addEventListener('change', function() {
-        if (sourceLanguage.value === targetLanguage.value) {
-            targetLanguage.value = targetLanguage.options[
-                (Array.from(targetLanguage.options).findIndex(opt => opt.value === sourceLanguage.value) + 1) 
-                % targetLanguage.options.length
-            ].value;
-        }
-    });
-
-    targetLanguage.addEventListener('change', function() {
-        if (targetLanguage.value === sourceLanguage.value) {
-            sourceLanguage.value = sourceLanguage.options[
-                (Array.from(sourceLanguage.options).findIndex(opt => opt.value === targetLanguage.value) + 1)
-                % sourceLanguage.options.length
-            ].value;
-        }
     });
 }); 
